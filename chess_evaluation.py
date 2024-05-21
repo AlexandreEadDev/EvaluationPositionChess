@@ -1,13 +1,14 @@
-import os
-import numpy as np
-import pandas as pd
+from flask import Flask, request, jsonify
 import tensorflow as tf
 import chess
+import numpy as np
+import pandas as pd
 
-# Suppress TensorFlow logging
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+app = Flask(__name__)
 
-# Define the boardstate function (same as in your training script)
+# Load the trained model
+model = tf.keras.models.load_model("engine01.keras")
+
 def boardstate(fen):
     board = chess.Board(fen)
     fstr = str(fen)
@@ -74,23 +75,20 @@ def boardstate(fen):
 
     return BITBOARD
 
-# Load the trained model
-model = tf.keras.models.load_model("engine01.keras")
+@app.route('/predict', methods=['POST'])
+def predict():
+    data = request.json
+    fen = data['fen']
+    new_data_features = [boardstate(fen)]
+    new_data_features_df = pd.DataFrame(new_data_features)
+    input2_columns = [0, 1, 2, 3, 4, 5]
+    new_inputboard = new_data_features_df.drop(columns=new_data_features_df.iloc[:, input2_columns])
+    new_inputmeta = new_data_features_df.iloc[:, input2_columns]
+    new_inputboard = np.array(new_inputboard)
+    new_inputmeta = np.array(new_inputmeta)
 
-# Example FEN strings
-new_fen_strings = ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]  # Replace with your own FEN strings
+    prediction = model.predict([new_inputboard, new_inputmeta])
+    return jsonify({'prediction': prediction.tolist()})
 
-# Preprocess new data
-new_data_features = [boardstate(fen) for fen in new_fen_strings]
-new_data_features_df = pd.DataFrame(new_data_features)
-input2_columns = [0, 1, 2, 3, 4, 5]
-new_inputboard = new_data_features_df.drop(columns=new_data_features_df.iloc[:, input2_columns])
-new_inputmeta = new_data_features_df.iloc[:, input2_columns]
-new_inputboard = np.array(new_inputboard)
-new_inputmeta = np.array(new_inputmeta)
-
-# Make predictions
-predictions = model.predict([new_inputboard, new_inputmeta])
-
-# Output predictions
-print(predictions)
+if __name__ == '__main__':
+    app.run(debug=True)
