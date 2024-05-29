@@ -1,7 +1,7 @@
 {
   "builds": [
     {
-      "src": "/chess_evaluation.py",
+      "src": "chess_evaluation.py",
       "use": "@vercel/python"
     }
   ],
