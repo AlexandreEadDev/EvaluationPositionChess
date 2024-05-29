@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod +x stockfish-linux-x86-64
+chmod +x stockfish-ubuntu-x86-64-avx2
