@@ -15,7 +15,7 @@ def evaluate():
     board = chess.Board(fen)
 
     # Use the correct path to the Stockfish executable
-    stockfish_path = os.environ.get('STOCKFISH_PATH', 'stockfish-windows-x86-64-avx2.exe')
+    stockfish_path = os.environ.get('STOCKFISH_PATH', 'stockfish-ubuntu-x86-64-avx2')
 
     with chess.engine.SimpleEngine.popen_uci(stockfish_path) as engine:
         result = engine.analyse(board, chess.engine.Limit(time=0.1), multipv=5)
