@@ -1,0 +1,10 @@
+{
+  "name": "evaluatepositionchess",
+  "version": "1.0.0",
+  "description": "Chess position evaluation API",
+  "main": "main.py",
+  "scripts": {
+    "start": "python main.py"
+  },
+  "dependencies": {}
+}
