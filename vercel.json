@@ -11,6 +11,5 @@
       "src": "/(.*)",
       "dest": "main.py"
     }
-  ],
-  "files": ["stockfish-windows-x86-64-avx2.exe"]
+  ]
 }
