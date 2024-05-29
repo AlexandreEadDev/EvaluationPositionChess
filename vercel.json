@@ -6,8 +6,11 @@
       "use": "@vercel/python"
     },
     {
-      "src": "stockfish-ubuntu-x86-64-avx2",
-      "use": "@vercel/static-build"
+      "src": "build.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "."
+      }
     }
   ],
   "routes": [
