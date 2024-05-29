@@ -8,7 +8,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/chess_evaluation.py"
+      "dest": "chess_evaluation.py"
     }
   ]
 }
