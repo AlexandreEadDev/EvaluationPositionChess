@@ -14,7 +14,7 @@ def evaluate():
     level = request.json['level']
     board = chess.Board(fen)
 
-    with chess.engine.SimpleEngine.popen_uci("stockfish.exe") as engine:
+    with chess.engine.SimpleEngine.popen_uci("stockfish-windows-x86-64-avx2.exe") as engine:
         result = engine.analyse(board, chess.engine.Limit(time=0.1), multipv=5)
         moves_scores = [(entry['pv'][0].uci(), entry['score'].white().score(mate_score=10000)) for entry in result]
 
