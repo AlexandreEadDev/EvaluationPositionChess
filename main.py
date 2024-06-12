@@ -27,7 +27,7 @@ def evaluate():
 
         evaluation = moves_scores[0][1]  # Evaluation of the best move
 
-    return jsonify({'evaluation': evaluation, 'best_move': chosen_move})
+    return jsonify({'evaluation': evaluation, 'move_to_play': chosen_move, 'best_move':  moves_scores[0][0]})
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
